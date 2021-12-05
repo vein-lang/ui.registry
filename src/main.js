@@ -8,14 +8,14 @@ import "highlight.js/styles/github.css";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faLink, faUser, faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { domain, clientId, audience } from "../auth_config.json";
+import { domain, clientID_production, clientID_test, audience } from "../auth_config.json";
 
 Vue.config.productionTip = false;
-
+var clientId = "";
 if (process.env.NODE_ENV === 'development')
-  clientId = clientId.test;
+  clientId = clientID_test;
 else 
-  clientId = clientId.production;
+  clientId = clientID_production;
 
 Vue.use(hljs.vuePlugin);
 
