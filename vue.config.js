@@ -16,7 +16,10 @@ module.exports = {
         jquery: "jquery",
         "window.jQuery": "jquery",
         jQuery: "jquery"
-      })
+      }),
+      new webpack.DefinePlugin({
+        'process.env.REGISTRY_API_ENDPOINT': JSON.stringify(process.env.REGISTRY_API_ENDPOINT || 'https://localhost:8080')
+      }),
     ]
   }
 };
