@@ -1,6 +1,6 @@
 {
-  "domain": "ivysola.us.auth0.com",
-  "clientID_production": "8JBmngcPLajuDq6iirE3T5MSz8hHHKKL",
-  "clientID_test": "cy343iGC95ujMohyAry6vu3dZCNKLWBv",
-  "audience": "https://registry.vein-lang.org"
+    "domain": "ivysola.us.auth0.com",
+    "clientID_production": "8JBmngcPLajuDq6iirE3T5MSz8hHHKKL",
+    "clientID_test": "cy343iGC95ujMohyAry6vu3dZCNKLWBv",
+    "audience": "https://registry.vein-lang.org"
 }
