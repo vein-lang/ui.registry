@@ -17,6 +17,9 @@ if (process.env.NODE_ENV === 'development')
 else 
   clientId = clientID_production;
 
+if (process.env["REGISTRY_API_ENDPOINT"] !== undefined)
+  axios.defaults.baseURL = process.env["REGISTRY_API_ENDPOINT"];
+
 Vue.use(hljs.vuePlugin);
 
 Vue.use(Auth0Plugin, {
