@@ -4,7 +4,7 @@ import router from "./router";
 import { Auth0Plugin } from "./auth";
 import hljs from "highlight.js/lib/core";
 import "highlight.js/styles/github.css";
-
+import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faLink, faUser, faPowerOff } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
