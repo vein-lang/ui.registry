@@ -1,19 +1,25 @@
 <template>
-  <div id="app" class="d-flex flex-column h-100">
-    <nav-bar />
-    <div class="container flex-grow-1">
-      <error />
-      <div class="mt-5">
-        <router-view />
+  <div id="app" class="theme-container">
+    <div id="search" class="center content-inputs" vs-justify="center" vs-align="center">
+      <vs-input
+        primary
+        v-model="value"
+        placeholder="Serach packages">
+        <template #icon>
+          <i class='bx bx-search-alt-2' ></i>
+        </template>
+        </vs-input>
+    </div>
+    <div class="page">
+      <nav-bar />
+      <div class="container flex-grow-1">
+        <error />
+        <div class="mt-5">
+          <router-view />
+        </div>
       </div>
     </div>
-    <footer class="bg-light text-center p-3">
-      <div class="logo"></div>
-      <p>
-        Sample project provided by
-        <a href="https://auth0.com">Auth0</a>
-      </p>
-    </footer>
+    
   </div>
 </template>
 
@@ -28,3 +34,22 @@ export default {
   }
 };
 </script>
+
+<style>
+.page {
+  transition: all .25s ease;
+  display: block;
+}
+#search > .vs-input-parent > .vs-input-content > input {
+  width: 900px;
+}
+#search {
+  padding-top: 70px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  
+  flex-wrap: wrap;
+}
+</style>

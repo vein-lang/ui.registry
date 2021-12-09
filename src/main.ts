@@ -4,6 +4,8 @@ import { Auth0Plugin } from "./auth";
 import axios from "axios";
 import './registerServiceWorker';
 import router from './router';
+import Vuesax from 'vuesax';
+import 'vuesax/dist/vuesax.css';
 
 import { domain, clientID_production, clientID_test, audience } from "../auth_config.json";
 
@@ -30,6 +32,10 @@ Vue.use(Auth0Plugin as any, {
         : window.location.pathname
     );
   }
+});
+
+Vue.use(Vuesax, {
+  
 });
 
 new Vue({
