@@ -9,7 +9,7 @@
             Github
           </a>
         </li>
-        <li><a target="_blank" href="/license/"> Privacy Policy </a></li>
+        <li><a target="_blank" href="https://ui.registry.vein-lang.org/#/license"> Privacy Policy </a></li>
       </ul>
       <ul>
         <li class="title">Help</li>

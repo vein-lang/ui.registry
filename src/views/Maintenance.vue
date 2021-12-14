@@ -1,7 +1,7 @@
 <template>
   <div class="flex-container">
     <div class="row">
-        <div class="flex-item" :key="i" v-for="c,i in 6">
+        <div class="flex-item" :key="i" v-for="c,i in 2">
             <br/>
         </div>
         <div class="flex-item">
