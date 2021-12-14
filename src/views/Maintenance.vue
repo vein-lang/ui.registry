@@ -26,10 +26,10 @@ import Component from "vue-class-component";
 })
 export default class Maintenance extends Vue {
   mounted() {
-    (this as any).$self_render.navbarEnable = false;
+    this.$self_render.navbarEnable = false;
   }
   goToBack() {
-    (this as any).$self_render.navbarEnable = true;
+    this.$self_render.navbarEnable = true;
     this.$router.push({ path: "/" });
   }
   created() {
