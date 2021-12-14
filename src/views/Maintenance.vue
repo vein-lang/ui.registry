@@ -10,6 +10,9 @@
         <div class="flex-item">
             <img src="./../assets/crystal.png" width="128" height="128" />
         </div>
+        <div class="flex-item" :key="i" v-for="c,i in 2">
+            <br/>
+        </div>
     </div>
   </div>
 </template>
