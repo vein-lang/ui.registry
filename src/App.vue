@@ -1,17 +1,7 @@
 <template>
   <div id="app" class="theme-container">
-    <div id="search" class="center content-inputs" vs-justify="center" vs-align="center">
-      <vs-input
-        primary
-        v-model="value"
-        placeholder="Serach packages">
-        <template #icon>
-          <i class='bx bx-search-alt-2' ></i>
-        </template>
-        </vs-input>
-    </div>
     <div class="page">
-      <nav-bar />
+      <nav-bar v-if="$self_render.navbarEnable" />
       <div class="container flex-grow-1">
         <error />
         <div class="mt-5">
@@ -19,20 +9,42 @@
         </div>
       </div>
     </div>
-    
+    <vs-divider color="warning"> </vs-divider>
+    <app-footer/>
   </div>
 </template>
 
-<script>
-import NavBar from "./components/NavBar";
-import Error from "./components/Error";
-
-export default {
+<script lang="ts">
+import "reflect-metadata";
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+import NavBar from "./components/NavBar.vue";
+import Error from "./components/Error.vue";
+import Footer from "./components/Footer.vue";
+import vsDivider from "./components/vsDivider.vue";
+@Component({
   components: {
     NavBar,
-    Error
+    Error,
+    "app-footer": Footer,
+    "vs-divider": vsDivider
+  },
+})
+export default class App extends Vue {
+  async created() 
+  {
+    const loading = this.$vs.loading({
+      target: this.$refs.content,
+      scale: '0.6',
+      background: 'primary',
+      opacity: 1,
+      color: '#fff',
+
+    });
+    try { await this.$axios.$get("/health"); loading.close(); }
+    catch { loading.close(); this.$router.push("/maintenance"); }
   }
-};
+}
 </script>
 
 <style>

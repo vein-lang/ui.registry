@@ -2,8 +2,10 @@
     <div class="center examplex">
       <vs-navbar center-collapsed v-model="active">
         <template #left>
-          <img src="@/assets/logo.png" height="64" width="64" alt="">
+          <img v-on:click="$router.push({ path: '/' }).catch(()=>{})" class="pointer" src="@/assets/logo.png" 
+            height="64" width="64" alt="vein-registry-logo"/>
         </template>
+
         <vs-navbar-group>
           Docs
           <template #items>
@@ -42,32 +44,39 @@
           </template>
         </vs-navbar-group>
 
-        <vs-navbar-item :active="active == 'License'" id="License">
-          License
+        <vs-navbar-item :active="active == 'Upload'" id="Upload">
+          Upload
         </vs-navbar-item>
 
-        <template #right>
-          <vs-button flat >Login</vs-button>
-          <vs-button>Get Started</vs-button>
+        <template #right v-if="!$auth.loading">
+          <vs-button v-if="!$auth.isAuthenticated" v-on:click="login" flat>
+            Log in with GitHub
+          </vs-button>
+          <vs-avatar history history-gradient v-if="$auth.isAuthenticated">
+            <img :src="$auth.user.picture" class="pointer" alt="" v-on:click="goToProfile">
+          </vs-avatar>
         </template>
       </vs-navbar>
     </div>
 </template>
 
-<script>
-export default {
-  name: "NavBar",
-  data:() => ({
-      active: 'primary'
-  }),
-  methods: {
-    login() {
-      this.$auth.loginWithRedirect();
-    },
-    logout() {
-      this.$auth.logout();
-      this.$router.push({ path: "/" });
-    }
+<script lang="ts">
+import "reflect-metadata";
+import Vue from "vue";
+import { Component } from "vue-property-decorator";
+@Component
+export default class NavBar extends Vue {
+  active: string = 'primary';
+
+  login() {
+    this.$auth.loginWithRedirect({});
   }
-};
+  logout() {
+    this.$auth.logout();
+    this.$router.push({ path: "/" });
+  }
+  goToProfile() {
+    this.$router.push({ path: "/profile" });
+  }
+}
 </script>
