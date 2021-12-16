@@ -9,7 +9,11 @@
         w="8"
         style="padding: 15px; padding-top: 0px"
       >
-        <h1><i class='bx bxs-package' ></i> {{ package.name }}</h1>
+        <h1>
+          <i class='bx bxs-package' style="color: #525252" ></i> 
+          {{ package.name }} 
+          <verified-badge v-if="package.isVerified"/>
+        </h1>
 
         <div
           class="
@@ -64,9 +68,12 @@
             <template #badge> public </template>
           </vs-avatar>
           <br />
-          <vs-card class="no-pointer">
+          <vs-card class="no-pointer package-card">
             <template #title>
-              <h3>{{ package.name }}</h3>
+              <h3>
+                {{ package.name }}
+                <verified-badge v-if="package.isVerified"/>
+              </h3>
             </template>
             <template #text>
               <p v-if="package.description">{{ package.description }}</p>
@@ -87,7 +94,7 @@
             Download <i class="bx bxs-download"></i>
           </vs-button>
           <vs-divider color="warning"> About </vs-divider>
-          <vs-card class="no-pointer">
+          <vs-card class="no-pointer package-card">
             <template #title> </template>
             <template #text>
               <p style="padding-top: 15px; text-align: center">
@@ -157,15 +164,16 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import NotFound from "./../components/NotFound.vue";
 import vsDivider from "./../components/vsDivider.vue";
-import * as marked from "marked";
 import { Author } from "@/models/VeinShard";
 import axios from "axios";
+import VerifiedBadge from "@/components/VerifiedBadge.vue";
 
 
 @Component({
   components: {
     "not-found": NotFound,
     "vs-divider": vsDivider,
+    "verified-badge": VerifiedBadge
   },
 })
 export default class PackageView extends Vue {
@@ -228,7 +236,7 @@ export default class PackageView extends Vue {
     this.isLoading = false;
     if (this.package?.hasEmbbededReadme)
       this.$axios.$get(`@/packages/${this.packageName}/${this.packageVersion}/readme`)
-        .then(x => { this.readmeMarkdown = this.$sanitize(marked.marked(x.data)); console.log(x); });
+        .then(x => { this.readmeMarkdown = x.data; });
   }
 
   downloadPackage() {
@@ -297,6 +305,43 @@ export default class PackageView extends Vue {
   top: -15px;
   right: -2px;
 }
+.package-card>.vs-card {
+  max-width: initial;
+}
+
+#markdown code {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #c7254e;
+  background-color: #444c56;
+  border-radius: 0;
+}
+#markdown table {
+    display: block;
+    width: 100%;
+    width: max-content;
+    max-width: 100%;
+    overflow: auto;
+}
+
+#markdown p, #markdown blockquote, 
+#markdown ul, #markdown ol, 
+#markdown dl, #markdown table, 
+#markdown pre, #markdown details {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+
+#markdown table tr {
+    background-color: #22272e;
+    border-top: 1px solid #373e47;
+}
+
+#markdown table th, #markdown table td {
+    padding: 6px 13px;
+    border: 1px solid #444c56;
+}
+
 </style>
 <style scoped>
 .social {

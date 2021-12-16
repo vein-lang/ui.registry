@@ -11,13 +11,13 @@
         </vs-input>
     </div>
     <vs-divider color="warning"> </vs-divider>
-    <vs-row v-if="!isSearchBegin" >
+    <vs-row>
       <vs-col :w="4">
         <div class="pad-7" >
           <vs-table>
           <template #thead>
             <vs-tr>
-              <vs-th ref="content"> Popular libraries </vs-th>
+              <vs-th ref="content"> <i class='bx bx-package' ></i> Popular libraries </vs-th>
             </vs-tr>
           </template>
           <template #tbody>
@@ -67,8 +67,29 @@
         </div>
       </vs-col>
     </vs-row>
-    <div v-if="isSearchBegin" class="package-list-wrapper">
+    <vs-divider v-if="isSearchBegin" color="warning">Search result</vs-divider>
+    <div v-if="isSearchBegin && !searchLoading" class="package-list-wrapper">
       <package-list :packages="result_search" pageSize="8"/>
+    </div>
+    <div v-if="isSearchBegin && searchLoading">
+      <vs-button style="width: 99%; height: 100px;"
+        upload
+        color="dark"
+        flat
+        :active="false"
+      />
+      <vs-button style="width: 99%; height: 100px;"
+        upload
+        color="dark"
+        flat
+        :active="false"
+      />
+      <vs-button style="width: 99%; height: 100px;"
+        upload
+        color="dark"
+        flat
+        :active="false"
+      />
     </div>
   </div>
 </template>

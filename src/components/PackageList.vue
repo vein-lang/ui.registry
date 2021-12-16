@@ -7,18 +7,27 @@
     style="padding: 10px" 
     type="3">
       <template #img>
-        <img width="94" height="94" style="min-width: 94px;" src="https://api.nuget.org/v3-flatcontainer/ivy.library/2.5.9/icon" alt="">
+        <img width="94" height="94" style="min-width: 94px;" :src="c.icon" alt="">
       </template>
       <template #title>
-        <h3>{{ c.name }}<text v-if="showVersion">-{{ c.version }}</text> </h3>
+        <h3 style="display: inline-flex;">
+          {{ c.name }}
+          <text v-if="showVersion">
+            <div style="padding-left: 5px; padding-right: 5px; color: #464646;">•</div>
+            {{ c.version }}
+          </text> 
+          <div v-if="c.isVerified" style="padding-left: 5px; padding-right: 5px; color: #464646;">•</div>
+          <verified-badge v-if="c.isVerified"/>
+        </h3>
       </template>
       <template #text>
         <div class="card-text">
-          <p>
-            <marquee scrolldelay="120" behavior="alternate" v-if="getDesc(c).length > 20">
+          <p v-if="c">
+            <span v-if="!c.description" style="color: #565656; font-style: italic;">no description</span>
+            <marquee scrolldelay="120" behavior="alternate" v-if="c.description && c.description.length > 20">
               {{ c.description }}
             </marquee>
-            <span v-else>{{ getDesc(c) }}</span>
+            <span v-else-if="c.description">{{ c.description }}</span>
           </p>
           <p class="card-time"> <i class='bx bxs-baguette' ></i> {{ getTimeAgo(c) }}</p>
         </div>
@@ -37,9 +46,12 @@ import "reflect-metadata";
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import { VeinShard } from "./../models";
+import VerifiedBadge from "./VerifiedBadge.vue";
 
 @Component({
-  components: {},
+  components: {
+    "verified-badge": VerifiedBadge
+  },
 })
 export default class PackageList extends Vue {
   @Prop() packages!: VeinShard[];
@@ -47,10 +59,6 @@ export default class PackageList extends Vue {
   @Prop() readonly pageSize!: Number;
   @Prop() showVersion!: boolean;
 
-  getDesc(p: VeinShard) 
-  {
-    return p.description ?? "";
-  }
   goToPackageView(c: VeinShard) {
     this.$router.push(`/package/${c.name}/${c.version}`);
   }
