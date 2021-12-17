@@ -6,7 +6,15 @@
             height="64" width="64" alt="vein-registry-logo"/>
         </template>
 
-        <vs-navbar-group>
+        
+        <vs-navbar-item :active="active == 'Home'" id="Home" v-on:click="$router.push({ path: '/' }).catch(()=>{})">
+          Home
+        </vs-navbar-item>
+        <vs-navbar-item :active="active == 'profile'" id="Profile" v-on:click="$router.push({ path: '/profile' }).catch(()=>{})">
+          Profile
+        </vs-navbar-item>
+        <!-- 
+          <vs-navbar-group>
           Docs
           <template #items>
             <vs-navbar-item :active="active == 'guide'" id="guide">
@@ -20,8 +28,7 @@
             </vs-navbar-item>
           </template>
         </vs-navbar-group>
-
-        <vs-navbar-group>
+           <vs-navbar-group>
           Ecosystem
 
           <template #items>
@@ -47,6 +54,7 @@
         <vs-navbar-item :active="active == 'Upload'" id="Upload">
           Upload
         </vs-navbar-item>
+        -->
 
         <template #right v-if="!$auth.loading">
           <vs-button v-if="!$auth.isAuthenticated" v-on:click="login" flat>
@@ -63,7 +71,9 @@
 <script lang="ts">
 import "reflect-metadata";
 import Vue from "vue";
-import { Component } from "vue-property-decorator";
+import { Component, Watch } from "vue-property-decorator";
+import { Route } from "vue-router";
+
 @Component
 export default class NavBar extends Vue {
   active: string = 'primary';
@@ -77,6 +87,11 @@ export default class NavBar extends Vue {
   }
   goToProfile() {
     this.$router.push({ path: "/profile" });
+  }
+  @Watch('$route', { immediate: true, deep: true })
+  onRouteChange (to: Route, from: any) {
+    console.log(to);
+    if (to.name) this.active = to.name;
   }
 }
 </script>

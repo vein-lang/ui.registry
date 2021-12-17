@@ -26,6 +26,6 @@ declare module 'vue/types/vue' {
     readonly $timeAgo: TimeAgo;
     readonly $axios: ExtensionsAll;
     readonly $vs: vsFunctions;
-    readonly $sanitize: (html: string) => string;
+    readonly $loader: { setLoaderCtor(loader: () => any), close(); open(); };
   }
 }

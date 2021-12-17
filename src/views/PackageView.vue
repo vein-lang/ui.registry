@@ -266,7 +266,18 @@ export default class PackageView extends Vue {
   }
 
   copyCommand(p: VeinShard) {
-    navigator.clipboard.writeText(`vein add ${p.name} --version ${p.originalVersion}`);
+    navigator.clipboard.writeText(`vein add ${p.name} --version ${p.version}`);
+    console.log(`Text '${`vein add ${p.name} --version ${p.version}`}' copied to clipboard`);
+
+    this.$vs.notification({
+      sticky: true,
+      icon: `<i class='bx bx-select-multiple'></i>`,
+      color: 'warn',
+      position: 'bottom-left',
+      duration: null,
+      progress: 'auto',
+      title: 'Сommand has been copied!'
+    });
   }
 }
 </script>

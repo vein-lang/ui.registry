@@ -10,6 +10,11 @@
           </a>
         </li>
         <li>
+          <a target="_blank" href="https://vein-lang.org">
+            Vein Lang 
+          </a>
+        </li>
+        <li>
           <router-link to="/license">Privacy Policy</router-link>
         </li>
       </ul>
@@ -18,8 +23,7 @@
         <li>
           <a
             target="_blank"
-            href="https://github.com/vein-lang/vein/issues"
-          >
+            href="https://github.com/vein-lang/vein/issues">
             Github Issues
           </a>
         </li>

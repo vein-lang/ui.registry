@@ -4,7 +4,7 @@
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="3">
         <div style="padding-right: 10px;">
           <vs-avatar size="70" badge badge-color="success">
-            <img :src="$auth.user.picture" alt="" />
+            <img :src="$auth.user.picture" alt="" v-on:click="changeAvatar" />
           </vs-avatar>
           <br />
           <vs-card class="no-pointer">
@@ -23,7 +23,10 @@
       </vs-col>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="8">
         <h1>Packages</h1>
-        <package-list :packages="packages"/>
+        <package-list v-if="packages && packages.length != 0" :packages="packages"/>
+        <div style="width: 100%; height: 450px; text-align: center;" v-if="!packages || packages.length == 0">
+          <h3 style="padding-top: 200px; color: #242424;">No packages</h3>
+        </div>
       </vs-col>
     </vs-row>
     <api-keys :ref="'_apiKeys_window_'" />
@@ -62,6 +65,7 @@ export default class Profile extends Vue {
 
   changeAvatar() {
     console.log("trying change avatar...");
+    throw new Error();
   }
 
   openApiKeysWindow() {

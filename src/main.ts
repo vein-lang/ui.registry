@@ -8,22 +8,24 @@ import router from './router';
 import Vuesax from 'vuesax';
 import 'vuesax/dist/vuesax.css';
 import polyfills from "./polyfills";
+import VueCookies from 'vue-cookies';
 import { ExtensionsPlugin } from "./extensions";
-
+import * as Sentry from "@sentry/vue";
+import { Integrations } from "@sentry/tracing";
 import * as Panelbear from '@panelbear/panelbear-js';
 
 Panelbear.load('ICD6yJpIniJ');
 Panelbear.trackPageview();
 
-
 import { domain, clientID_production, clientID_test, audience } from "../auth_config.json";
 
 Vue.config.productionTip = false;
 
+let isDevelopment = process.env.NODE_ENV === 'development';
 polyfills();
 
 var clientId = "";
-if (process.env.NODE_ENV === 'development')
+if (isDevelopment)
   clientId = clientID_test;
 else
   clientId = clientID_production;
@@ -31,24 +33,51 @@ else
 if (process.env["REGISTRY_API_ENDPOINT"] !== undefined)
   axios.defaults.baseURL = process.env["REGISTRY_API_ENDPOINT"];
 
+let app: Vue | null = null;
+
 Vue.use(Auth0Plugin as any, {
   domain,
   clientId,
   audience,
-  onRedirectCallback: (appState: any) => {
-    router.push(
-      appState && appState.targetUrl
-        ? appState.targetUrl
-        : window.location.pathname
-    );
+  onRedirectCallback: (_) => {
+    app?.$loader.open();
+    window.location.href = "/";
   }
 });
 
+Vue.use(VueCookies);
 Vue.use(Vuesax, {});
 Vue.use(ExtensionsPlugin, {});
 Vue.use(RenderPlugin, {});
 
-new Vue({
+Sentry.init({
+  Vue,
+  dsn: "https://9fc61ca8d8104cde8e1b1edbfcf6ee39@o1093028.ingest.sentry.io/6112114",
+  integrations: [
+    new Integrations.BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ["localhost", "vein.gallery", /^\//],
+    }),
+  ],
+  tracesSampleRate: 1.0,
+  debug: isDevelopment,
+  logErrors: true,
+  enabled: !isDevelopment
+});
+
+app = new Vue({
   router,
   render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');
+
+app.$loader.setLoaderCtor(() => app?.$vs.loading({
+  target: app.$refs.app,
+  scale: '0.6',
+  background: 'warn',
+  type: 'gradient',
+  opacity: 1,
+  color: '#fff'
+}));
+app.$loader.open();
+
+if (isDevelopment) (window as any).app = app;

@@ -68,8 +68,12 @@
       </vs-col>
     </vs-row>
     <vs-divider v-if="isSearchBegin" color="warning">Search result</vs-divider>
+    <vs-divider v-if="!isSearchBegin && !searchLoading" color="warning"></vs-divider>
     <div v-if="isSearchBegin && !searchLoading" class="package-list-wrapper">
       <package-list :packages="result_search" pageSize="8"/>
+    </div>
+    <div v-if="!isSearchBegin && !searchLoading" style="width: 100%; height: 450px; text-align: center;">
+          <h3 style="padding-top: 200px; color: #242424;">Typo name for search</h3>
     </div>
     <div v-if="isSearchBegin && searchLoading">
       <vs-button style="width: 99%; height: 100px;"
@@ -140,7 +144,7 @@ export default class home extends Vue
   {
     this.$self_render.navbarEnable = true;
     let result = await getState();
-
+    this.$loader.close();
     this.popular_packages = result.popular_packages;
     this.latest_packages = result.latest_packages;
     this.packages_state = result.packages_state;

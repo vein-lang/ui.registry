@@ -3,7 +3,7 @@ import createAuth0Client, { Auth0Client, GetTokenSilentlyVerboseResponse, IdToke
 
 
 const DEFAULT_REDIRECT_CALLBACK = (o: any) =>
-    window.history.replaceState({}, document.title, window.location.pathname);
+    window.location.href = "/";
 
 let instance: Vue;
 
@@ -72,6 +72,7 @@ export const useAuth0 = ({
                 }
                 catch (e: any) {
                     this.error = e;
+                    console.error(e);
                 }
                 finally {
                     this.loading = false;
@@ -111,6 +112,7 @@ export const useAuth0 = ({
                 }
             } catch (e: any) {
                 this.error = e;
+                console.error(e);
             } finally {
                 this.isAuthenticated = await this.auth0Client.isAuthenticated();
                 this.user = await this.auth0Client.getUser();

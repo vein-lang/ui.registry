@@ -8,11 +8,6 @@ TimeAgo.addDefaultLocale(en);
 
 const timeAgo = new TimeAgo('en-US');
 
-import dompurify from "dompurify";
-
-const DOMPurify = dompurify();
-
-
 let instance: ExtensionsAll;
 
 export type ExtensionsFields = {
@@ -70,11 +65,20 @@ export const useExtension = ({
   return instance as any;
 };
 
+
+let _loader_ctor_;
+let _loader_instance_;
+let loader_obj = {
+  setLoaderCtor(loader: () => any) { if (!_loader_ctor_) _loader_ctor_ = loader; },
+  close() { if (_loader_instance_) _loader_instance_.close(); _loader_instance_ = undefined; },
+  open() { if (!_loader_instance_) _loader_instance_ = _loader_ctor_(); }
+};
+
 export const ExtensionsPlugin: PluginObject<any> = {
   install(vue: VueConstructor, options: any) {
     ;
     (vue as any).prototype.$timeAgo = timeAgo;
     (vue as any).prototype.$axios = useExtension(options);
-    (vue as any).prototype.$sanitize = DOMPurify.sanitize;
+    (vue as any).prototype.$loader = loader_obj;
   }
 };
