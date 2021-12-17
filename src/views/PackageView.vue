@@ -75,11 +75,12 @@
                 <verified-badge v-if="currentPackage.isVerified"/>
               </h3>
             </template>
-            <template #text>
-              <p v-if="currentPackage.description">{{ currentPackage.description }}</p>
-              <p v-else style="color: #565656; font-style: italic;">no description</p>
-              <p>{{ packageVersion }}</p>
-            </template>
+            <marquee scrolldelay="120" behavior="alternate" 
+              v-if="currentPackage.description && currentPackage.description.length > 30">
+              {{ currentPackage.description }}
+            </marquee>
+            <p v-else-if="currentPackage.description">{{ currentPackage.description }}</p>
+            <p v-else style="color: #565656; font-style: italic;">no description</p>
           </vs-card>
           <br />
           <vs-button

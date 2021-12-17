@@ -24,7 +24,7 @@
         <div class="card-text">
           <p v-if="c">
             <span v-if="!c.description" style="color: #565656; font-style: italic;">no description</span>
-            <marquee scrolldelay="120" behavior="alternate" v-if="c.description && c.description.length > 20">
+            <marquee scrolldelay="120" behavior="alternate" v-if="c.description && c.description.length > 30">
               {{ c.description }}
             </marquee>
             <span v-else-if="c.description">{{ c.description }}</span>
