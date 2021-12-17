@@ -199,7 +199,7 @@ export default class PackageView extends Vue {
     if (this.currentPackage?.urls.other)
       return { ...this.currentPackage?.urls, ...JSON.parse(this.currentPackage?.urls.other) };
     else 
-      return { ...this.currentPackage?.urls };
+      return { ...this.currentPackage?.urls } as any;
   }
 
   goToUrl(s: string) {

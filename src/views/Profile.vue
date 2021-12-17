@@ -24,7 +24,8 @@
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="8">
         <h1>Packages</h1>
         <package-list v-if="packages && packages.length != 0" :packages="packages"/>
-        <div style="width: 100%; height: 450px; text-align: center;" v-if="!packages || packages.length == 0">
+        <div ref="pod" style="width: 100%; height: 450px; text-align: center;" 
+          v-if="!packages || packages.length == 0">
           <h3 style="padding-top: 200px; color: #242424;">No packages</h3>
         </div>
       </vs-col>
