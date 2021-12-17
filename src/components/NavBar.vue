@@ -10,7 +10,11 @@
         <vs-navbar-item :active="active == 'Home'" id="Home" v-on:click="$router.push({ path: '/' }).catch(()=>{})">
           Home
         </vs-navbar-item>
-        <vs-navbar-item :active="active == 'profile'" id="Profile" v-on:click="$router.push({ path: '/profile' }).catch(()=>{})">
+        <vs-navbar-item 
+          v-if="$auth.isAuthenticated" 
+          :active="active == 'profile'" 
+          id="Profile" 
+          v-on:click="$router.push({ path: '/profile' }).catch(()=>{})">
           Profile
         </vs-navbar-item>
         <!-- 
