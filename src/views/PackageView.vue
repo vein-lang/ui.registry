@@ -10,9 +10,9 @@
         style="padding: 15px; padding-top: 0px"
       >
         <h1>
-          <i class='bx bxs-package' style="color: #525252" ></i> 
-          {{ package.name }} 
-          <verified-badge v-if="package.isVerified"/>
+          <i class='bx bxs-currentPackage' style="color: #525252" ></i> 
+          {{ currentPackage.name }} 
+          <verified-badge v-if="currentPackage.isVerified"/>
         </h1>
 
         <div
@@ -31,7 +31,7 @@
               style="min-width: 100%; opacity: 1"
             />
             <label for="vs-input--2445" class="vs-input__label">
-              vein add {{ package.name }} --version {{ packageVersion }}
+              vein add {{ currentPackage.name }} --version {{ packageVersion }}
             </label>
             <span
               class="
@@ -39,7 +39,7 @@
                 pointer
                 vs-input__icon__copy
               "
-              v-on:click="copyCommand(package)"
+              v-on:click="copyCommand(currentPackage)"
             >
               <i class="bx bxs-copy"></i>
             </span>
@@ -64,19 +64,19 @@
             badge
             badge-color="warn"
           >
-            <img :src="package.icon" alt="" />
+            <img :src="currentPackage.icon" alt="" />
             <template #badge> public </template>
           </vs-avatar>
           <br />
-          <vs-card class="no-pointer package-card">
+          <vs-card class="no-pointer currentPackage-card">
             <template #title>
               <h3>
-                {{ package.name }}
-                <verified-badge v-if="package.isVerified"/>
+                {{ currentPackage.name }}
+                <verified-badge v-if="currentPackage.isVerified"/>
               </h3>
             </template>
             <template #text>
-              <p v-if="package.description">{{ package.description }}</p>
+              <p v-if="currentPackage.description">{{ currentPackage.description }}</p>
               <p v-else style="color: #565656; font-style: italic;">no description</p>
               <p>{{ packageVersion }}</p>
             </template>
@@ -94,20 +94,20 @@
             Download <i class="bx bxs-download"></i>
           </vs-button>
           <vs-divider color="warning"> About </vs-divider>
-          <vs-card class="no-pointer package-card">
+          <vs-card class="no-pointer currentPackage-card">
             <template #title> </template>
             <template #text>
               <p style="padding-top: 15px; text-align: center">
                 <i class="bx bxs-time"></i>
-                Published {{ getTimeAgo(package) }}
+                Published {{ getTimeAgo(currentPackage) }}
               </p>
               <p style="padding-top: 15px; text-align: center">
                 <i class='bx bx-shield-quarter'></i>
-                {{ package.license }} License
+                {{ currentPackage.license }} License
               </p>
               <p style="padding-top: 15px; text-align: center">
                 <i class='bx bxs-download'></i>
-                {{ package.downloads }} downloads
+                {{ currentPackage.downloads }} downloads
               </p>
             </template>
           </vs-card>
@@ -192,11 +192,14 @@ export default class PackageView extends Vue {
     return this.$route.params["version"];
   }
   isLoading: boolean = true;
-  package?: VeinShard;
+  currentPackage?: VeinShard;
   isNotFound: boolean = false;
   downloadPackageActive: boolean = false;
   getSocials(): Record<string, string> {
-    return { ...this.package?.urls, ...JSON.parse(this.package?.urls.other) };
+    if (this.currentPackage?.urls.other)
+      return { ...this.currentPackage?.urls, ...JSON.parse(this.currentPackage?.urls.other) };
+    else 
+      return { ...this.currentPackage?.urls };
   }
 
   goToUrl(s: string) {
@@ -204,7 +207,7 @@ export default class PackageView extends Vue {
   }
   getAuthors(): Author[]
   {
-    return (this.package?.authors) ?? [];
+    return (this.currentPackage?.authors) ?? [];
   }
 
   async created() {
@@ -231,10 +234,10 @@ export default class PackageView extends Vue {
     }
 
     loading.close();
-    this.package = result.data;
-    console.log(this.package);
+    this.currentPackage = result.data;
+    console.log(this.currentPackage);
     this.isLoading = false;
-    if (this.package?.hasEmbbededReadme)
+    if (this.currentPackage?.hasEmbbededReadme)
       this.$axios.$get(`@/packages/${this.packageName}/${this.packageVersion}/readme`)
         .then(x => { this.readmeMarkdown = x.data; });
   }
@@ -244,7 +247,7 @@ export default class PackageView extends Vue {
     this.downloadPackageActive = true;
     setTimeout(() => {
       this.downloadPackageActive = false;
-      this.package!.downloads++;
+      this.currentPackage!.downloads++;
     }, 4500);
     this.downloadItem({ url: `@/packages/${this.packageName}/${this.packageVersion}`, 
     label: `${this.packageName}-${this.packageVersion}.shard`});
@@ -276,7 +279,7 @@ export default class PackageView extends Vue {
       position: 'bottom-left',
       duration: null,
       progress: 'auto',
-      title: 'Сommand has been copied!'
+      title: 'Command has been copied!'
     });
   }
 }
@@ -316,7 +319,7 @@ export default class PackageView extends Vue {
   top: -15px;
   right: -2px;
 }
-.package-card>.vs-card {
+.currentPackage-card>.vs-card {
   max-width: initial;
 }
 
