@@ -10,8 +10,14 @@
         style="padding: 15px; padding-top: 0px"
       >
         <h1>
-          <i class='bx bxs-currentPackage' style="color: #525252" ></i> 
-          {{ currentPackage.name }} 
+          <vs-tooltip style="display: inline;" v-if="currentPackage.hasMetapackage">
+              <i class='bx bxs-memory-card' style="color: #525252"></i>
+              <template #tooltip>
+                This is a metapackage!
+              </template>
+          </vs-tooltip>
+          <i class='bx bxs-package' style="color: #525252" v-else></i> 
+          {{ packageName }} 
           <verified-badge v-if="currentPackage.isVerified"/>
         </h1>
 
@@ -51,6 +57,16 @@
             </div>
           </div>
         </div>
+        <vs-divider color="warning" v-if="currentPackage.hasServicedPackage"></vs-divider>
+        <vs-alert color="warn" v-if="currentPackage.hasServicedPackage">
+          <template #icon>
+            <i class='bx bxs-error'></i>
+          </template>
+          <template #title>
+            Alert!
+          </template>
+          This is a technical package, do not install it directly!
+        </vs-alert>
         <vs-divider color="warning"> readme </vs-divider>
         <div id="markdown">
           <div v-html="readmeMarkdown"></div>
@@ -75,12 +91,19 @@
                 <verified-badge v-if="currentPackage.isVerified"/>
               </h3>
             </template>
-            <marquee scrolldelay="120" behavior="alternate" 
-              v-if="currentPackage.description && currentPackage.description.length > 30">
-              {{ currentPackage.description }}
-            </marquee>
-            <p v-else-if="currentPackage.description">{{ currentPackage.description }}</p>
-            <p v-else style="color: #565656; font-style: italic;">no description</p>
+            <template #text>
+               <div style="margin-right: 80px;">
+                  <marquee scrolldelay="120" behavior="alternate" 
+                      v-if="currentPackage.description && currentPackage.description.length > 40">
+                    {{ currentPackage.description }}
+                  </marquee>
+                  <p v-else-if="currentPackage.description">{{ currentPackage.description }}</p>
+                  <p v-else style="color: #565656; font-style: italic;">no description</p>
+                  <p style="color: #565656;">
+                    v{{currentPackage.version}}
+                  </p>
+               </div>
+            </template>
           </vs-card>
           <br />
           <vs-button
@@ -131,8 +154,20 @@
               
             </div>
           </vs-avatar-group>
-          <vs-divider color="warning"> Social </vs-divider>
-          <div class="center social">
+          <div v-if="getDependecies()" class="center">
+            <vs-divider color="warning"> Dependencies </vs-divider>
+
+
+            <vs-button :key="i" v-for="(dep, i) in getDependecies()"
+              size="small" block gradient
+              @click="goToDep(dep)"
+            >
+              <i class='bx bx-package' ></i>{{dep.name}}@{{dep.version}}
+            </vs-button>
+          </div>
+
+          <vs-divider v-if="getSocials()" color="warning"> Social </vs-divider>
+          <div v-if="getSocials()" class="center social">
             <div v-for="(url, name) in getSocials()" :key="name">
               <vs-tooltip v-if="name == 'discord'">
                 <vs-button icon color="discord"  v-on:click="goToUrl(url)">
@@ -165,7 +200,7 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import NotFound from "./../components/NotFound.vue";
 import vsDivider from "./../components/vsDivider.vue";
-import { Author } from "@/models/VeinShard";
+import { Author, PackageReference } from "@/models/VeinShard";
 import axios from "axios";
 import VerifiedBadge from "@/components/VerifiedBadge.vue";
 
@@ -183,7 +218,6 @@ export default class PackageView extends Vue {
     super();
     (window as any)["PackageView"] = this;
   }
-  log(i, x) {  console.log(i, x); return false; }
   readmeMarkdown: string = "<h2>No readme detected</h2>";
 
   get packageName() {
@@ -192,26 +226,50 @@ export default class PackageView extends Vue {
   get packageVersion() {
     return this.$route.params["version"];
   }
+
   isLoading: boolean = true;
   currentPackage?: VeinShard;
   isNotFound: boolean = false;
   downloadPackageActive: boolean = false;
-  getSocials(): Record<string, string> {
+
+  getSocials(): Record<string, string> | null {
+    if (!this.currentPackage?.urls)
+      return null;
     if (this.currentPackage?.urls.other)
       return { ...this.currentPackage?.urls, ...JSON.parse(this.currentPackage?.urls.other) };
     else 
       return { ...this.currentPackage?.urls } as any;
   }
 
+  getDependecies(): PackageReference[] | null
+  {
+    if (!this.currentPackage?.dependencies)
+      return null;
+    if (this.currentPackage?.dependencies.length == 0)
+      return null;
+    return this.currentPackage.dependencies;
+  }
+
   goToUrl(s: string) {
     window.open(s);
   }
+
   getAuthors(): Author[]
   {
     return (this.currentPackage?.authors) ?? [];
   }
 
+  goToDep(dep: PackageReference)
+  {
+    this.$router.push(`/package/${dep.name}/${dep.version}`);
+    this.init();
+  }
+
   async created() {
+    this.init();
+  }
+
+  async init() {
     if (!this.packageVersion || !this.packageName) {
       this.isNotFound = true;
       return;

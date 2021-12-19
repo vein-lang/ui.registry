@@ -42,4 +42,8 @@ export type VeinShard = {
     published: string;
 
     dependencies: PackageReference[];
+
+    hasServicedPackage: boolean;
+
+    hasMetapackage: boolean;
 }
