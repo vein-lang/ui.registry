@@ -160,7 +160,7 @@ export default class home extends Vue
   onSearchBegin(val: string, _: string) {
     if (this.searchTimer !== -1) 
       this.abortSearch();
-    if (val === "" || val.length < 3)
+    if (val === "" || val.length < 2)
       return this.abortSearch();
     this.isSearchBegin = true;
     this.searchTimer = setTimeout(() => {

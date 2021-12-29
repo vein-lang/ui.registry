@@ -83,6 +83,38 @@
         color: gray;
         text-decoration: none;
     }
+
+    .gradient
+    {
+        border:1px solid black;
+        font-size:30px;
+        background: linear-gradient(146deg, #f300ff, #5b328b, #ffa500);
+        background-size: 200% 200%;
+        -webkit-animation: gradient-animation 5s ease infinite;
+        -moz-animation: gradient-animation 5s ease infinite;
+        animation: gradient-animation 5s ease infinite;
+
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: calc(100vw - 2px);
+        position: absolute;
+    }
+    @-webkit-keyframes gradient-animation {
+        0%{background-position:10% 0%}
+        50%{background-position:91% 100%}
+        100%{background-position:10% 0%}
+    }
+    @-moz-keyframes gradient-animation {
+        0%{background-position:10% 0%}
+        50%{background-position:91% 100%}
+        100%{background-position:10% 0%}
+    }
+    @keyframes gradient-animation { 
+        0%{background-position:10% 0%}
+        50%{background-position:91% 100%}
+        100%{background-position:10% 0%}
+    }
   </style>
 </head>
 
