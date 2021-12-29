@@ -16,7 +16,7 @@ module.exports = {
   },
   chainWebpack: (config) => {
     config.plugin('define').tap((definitions) => {
-      definitions[0]['process.env']['REGISTRY_API_ENDPOINT'] = 
+      definitions[0]['process.env']['REGISTRY_API_ENDPOINT'] =
         JSON.stringify(process.env.REGISTRY_API_ENDPOINT || 'https://localhost:8080');
       return definitions;
     });
