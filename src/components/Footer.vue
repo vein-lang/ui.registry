@@ -42,7 +42,7 @@
       </ul>
     </div>
     <div class="copy">
-      <span class="span-copy"> Copyright © 2021 Vein Lang </span>
+      <span class="span-copy"> Copyright © 2021-{{(new Date(Date.now()).getFullYear())}} Vein Lang </span>
       <span class="span-vein"
         ><span> Created By </span>
         <a target="_blank" href="http://0xf6.moe">Yuuki Wesp</a></span
