@@ -12,7 +12,7 @@
         <div class="flex-item text-item">
           The Vein Lang maintains several services related to the Vein Project,
           including the <a href="vein-lang.org">vein-lang.org</a> and
-          <a href="ui.registry.vein-lang.org">ui.registry.vein-lang.org</a> (the
+          <a href="vein.gallery">vein.gallery</a> (the
           “Services”).<br />
           This privacy notice explains what we do with personal information.
         </div>
@@ -24,18 +24,18 @@
         </div>
         <vs-divider color="warning"> Logging in with GitHub </vs-divider>
         <div class="flex-item text-item">
-          <a href="ui.registry.vein-lang.org">ui.registry.vein-lang.org</a>
+          <a href="vein.gallery">vein.gallery</a>
           requires users to have a GitHub account in order to log in and use the
           service.<br />
           When you log in to
-          <a href="ui.registry.vein-lang.org">ui.registry.vein-lang.org</a>
+          <a href="vein.gallery">vein.gallery</a>
           using a GitHub account, we receive your GitHub username and avatar.
           <br />If you share a display name or public email address in your
           GitHub public profile, we also receive that information.
         </div>
         <vs-divider color="warning"> Error monitoring </vs-divider>
         <div class="flex-item text-item">
-          <a href="ui.registry.vein-lang.org">ui.registry.vein-lang.org</a>
+          <a href="vein.gallery">vein.gallery</a>
           uses Sentry, an error monitoring service, to help the Vein Project
           team discover and fix the performance of the code.<br />
           When there is an error, Sentry receives basic information about how
@@ -61,13 +61,13 @@
             Vercel’s privacy notice is here </a
           >.
           <br />
-          GitHub login is used for authentication in ui.registry.vein-lang.org
+          GitHub login is used for authentication in <a href="vein.gallery">vein.gallery</a>
           and (optionally) in the forums.
           <a> GitHub’s Privacy Statement can be found here. </a>
         </div>
         <vs-divider color="warning"> Authentication provider </vs-divider>
         <div class="flex-item text-item">
-          <a href="ui.registry.vein-lang.org">ui.registry.vein-lang.org</a>
+          <a href="vein.gallery">vein.gallery</a>
           uses the <a href="auth0.com">Auth0</a> authentication platform, an
           adaptable authentication and authorization service to simplify
           authorization and<br />
