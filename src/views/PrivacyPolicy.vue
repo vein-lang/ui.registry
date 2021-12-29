@@ -129,6 +129,15 @@ import Component from "vue-class-component";
   components: { VsDivider },
 })
 export default class PrivacyPolicy extends Vue {
+  metaInfo() {
+    return  {
+      title: `Privacy policy`,
+      meta: [
+        { name: 'description', content: `Vein gallery privacy policy` }
+      ]
+    }
+  }
+
   goToBack() {
     this.$router.push({ path: "/" });
   }

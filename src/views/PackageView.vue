@@ -214,6 +214,15 @@ import VerifiedBadge from "@/components/VerifiedBadge.vue";
 })
 export default class PackageView extends Vue {
 
+  metaInfo() {
+    return  {
+      title: `${this.packageName} ${this.packageVersion}`,
+      meta: [
+        { name: 'description', content: this.currentPackage?.description ?? '' }
+      ]
+    }
+  }
+
   constructor() {
     super();
     (window as any)["PackageView"] = this;

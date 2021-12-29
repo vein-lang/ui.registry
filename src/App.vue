@@ -34,6 +34,12 @@ import cookie from "./components/Cookie.vue";
   },
 })
 export default class App extends Vue {
+
+  metaInfo = {
+    title: '',
+    titleTemplate: 'Vein Gallery | %s'
+  }
+
   async created() 
   {
     try { await this.$axios.$get("/health"); this.$loader.close(); }

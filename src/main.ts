@@ -12,6 +12,7 @@ import VueCookies from 'vue-cookies';
 import { ExtensionsPlugin } from "./extensions";
 import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
+import VueMeta from 'vue-meta';
 import * as Panelbear from '@panelbear/panelbear-js';
 
 Panelbear.load('ICD6yJpIniJ');
@@ -49,6 +50,7 @@ Vue.use(VueCookies);
 Vue.use(Vuesax, {});
 Vue.use(ExtensionsPlugin, {});
 Vue.use(RenderPlugin, {});
+Vue.use(VueMeta);
 
 Sentry.init({
   Vue,

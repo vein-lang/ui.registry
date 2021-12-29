@@ -25,6 +25,13 @@ import Component from "vue-class-component";
   components: {},
 })
 export default class Maintenance extends Vue {
+
+  metaInfo() {
+    return  {
+      title: `Service in maintenance`
+    }
+  }
+
   mounted() {
     this.$self_render.navbarEnable = false;
   }

@@ -49,6 +49,12 @@ import { VeinShard } from "./../models";
   }
 })
 export default class Profile extends Vue {
+  metaInfo() {
+    return  {
+      title: `${this.$auth.user.name}`
+    }
+  }
+
   @Ref("_apiKeys_window_") readonly apiKeysWindow!: ApiKeys
   me2Packages: VeinShard[] = [];
   async created() {
