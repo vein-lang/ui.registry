@@ -19,7 +19,7 @@ const routes: Array<RouteConfig> = [
     path: "/profile",
     name: "profile",
     component: () => import(/* webpackChunkName: "profile" */ '../views/Profile.vue'),
-    beforeEnter: authGuard
+    beforeEnter: authGuard,
   },
   {
     path: "/package/:id/:version",
@@ -34,7 +34,8 @@ const routes: Array<RouteConfig> = [
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: 'history'
 });
 
 export default router;
