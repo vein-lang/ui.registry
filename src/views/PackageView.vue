@@ -94,7 +94,7 @@
             <template #text>
                <div style="margin-right: 80px;">
                   <marquee scrolldelay="120" behavior="alternate" 
-                      v-if="currentPackage.description && currentPackage.description.length > 40">
+                      v-if="currentPackage.description && currentPackage.description.length >60">
                     {{ currentPackage.description }}
                   </marquee>
                   <p v-else-if="currentPackage.description">{{ currentPackage.description }}</p>

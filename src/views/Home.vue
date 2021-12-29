@@ -23,7 +23,7 @@
           <template #tbody>
             <vs-tr :key="i" v-for="(tr, i) in popular_packages" :data="tr">
               <vs-td>
-                {{ tr }}
+                <router-link :to="`/package/${tr}/latest`"> {{ tr }} </router-link>
               </vs-td>
             </vs-tr>
           </template>
@@ -41,7 +41,7 @@
           <template #tbody>
             <vs-tr :key="i" v-for="(tr, i) in latest_packages" :data="tr">
               <vs-td>
-                {{ tr }}
+                <router-link :to="`/package/${tr}/latest`"> {{ tr }} </router-link>
               </vs-td>
             </vs-tr>
           </template>
