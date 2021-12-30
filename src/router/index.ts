@@ -30,6 +30,11 @@ const routes: Array<RouteConfig> = [
     path: "/license/",
     name: "PrivacyPolicy",
     component: () => import(/* webpackChunkName: "privacyPolicy" */ '../views/PrivacyPolicy.vue'),
+  },
+  {
+    path: "/upload",
+    name: "UploadView",
+    component: () => import(/* webpackChunkName: "privacyPolicy" */ '../views/Upload.vue'),
   }
 ];
 

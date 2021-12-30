@@ -16,6 +16,11 @@ export type PackageUrls = {
   other?: any;
 };
 
+export type PackageVersions = {
+  versions: string[],
+  downloads: number[],
+  dates: string[],
+}
 
 
 export type VeinShard = {

@@ -8,58 +8,18 @@
         </template>
 
         
-        <vs-navbar-item :active="active == 'Home'" id="Home" v-on:click="$router.push({ path: '/' }).catch(()=>{})">
-          Home
+        <vs-navbar-item :active="active == 'Home'" id="Home">
+          <router-link style="color: white" to="/">Home</router-link>
         </vs-navbar-item>
-        <vs-navbar-item 
-          v-if="$auth.isAuthenticated" 
+        <vs-navbar-item :active="active == 'UploadView'" id="upload">
+          <router-link style="color: white" to="/upload">Upload</router-link>
+        </vs-navbar-item>
+        <vs-navbar-item
           :active="active == 'profile'" 
-          id="Profile" 
-          v-on:click="$router.push({ path: '/profile' }).catch(()=>{})">
-          Profile
+          id="Profile">
+          <router-link v-if="$auth.isAuthenticated" to="/profile" style="color: white">Profile</router-link>
+          <a style="color: gray;" v-if="!$auth.isAuthenticated">Profile</a>
         </vs-navbar-item>
-        <!-- 
-          <vs-navbar-group>
-          Docs
-          <template #items>
-            <vs-navbar-item :active="active == 'guide'" id="guide">
-              Guide
-            </vs-navbar-item>
-            <vs-navbar-item :active="active == 'docs'" id="docs">
-              Documents
-            </vs-navbar-item>
-            <vs-navbar-item :active="active == 'components'" id="components">
-              Components
-            </vs-navbar-item>
-          </template>
-        </vs-navbar-group>
-           <vs-navbar-group>
-          Ecosystem
-
-          <template #items>
-            <h5 class="title">
-              Social
-            </h5>
-
-            <vs-navbar-item :active="active == 'Github'" id="Github">
-              Github
-            </vs-navbar-item>
-            <vs-navbar-item :active="active == 'Discord'" id="Discord">
-              Discord
-            </vs-navbar-item>
-            <vs-navbar-item :active="active == 'Twitter'" id="Twitter">
-              Twitter
-            </vs-navbar-item>
-            <vs-navbar-item :active="active == 'Medium'" id="Medium">
-              Medium
-            </vs-navbar-item>
-          </template>
-        </vs-navbar-group>
-
-        <vs-navbar-item :active="active == 'Upload'" id="Upload">
-          Upload
-        </vs-navbar-item>
-        -->
 
         <template #right v-if="!$auth.loading">
           <vs-button v-if="!$auth.isAuthenticated" v-on:click="login" flat>
