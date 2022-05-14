@@ -43,16 +43,18 @@
     </div>
     <div class="copy">
       <span class="span-copy"> Copyright © 2021-{{(new Date(Date.now()).getFullYear())}} Vein Lang </span>
-      <span class="span-vein"
-        ><span> Created By </span>
-        <a target="_blank" href="http://0xf6.moe">Yuuki Wesp</a></span
-      >
+      <a href="https://vercel.com/?utm_source=vein-lang&utm_campaign=oss">
+        <img src="https://raw.githubusercontent.com/vein-lang/vein/master/.github/powered-by-vercel.svg">
+      </a>
+      <span class="span-vein"><span> Created By </span>
+        <a target="_blank" href="http://0xf6.moe">Yuuki Wesp</a></span>
     </div>
   </footer>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import Component from "vue-class-component";
+
 
 @Component({
   components: {},
