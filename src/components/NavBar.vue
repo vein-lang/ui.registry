@@ -17,16 +17,16 @@
         <vs-navbar-item
           :active="active == 'profile'" 
           id="Profile">
-          <router-link v-if="$auth.isAuthenticated" to="/profile" style="color: white">Profile</router-link>
-          <a style="color: gray;" v-if="!$auth.isAuthenticated">Profile</a>
+          <router-link v-if="$store.state.isAuthed" to="/profile" style="color: white">Profile</router-link>
+          <a style="color: gray;" v-if="!$store.state.isAuthed">Profile</a>
         </vs-navbar-item>
 
-        <template #right v-if="!$auth.loading">
-          <vs-button v-if="!$auth.isAuthenticated" v-on:click="login" flat>
+        <template #right v-if="!$store.state.isLoading">
+          <vs-button v-if="!$store.state.isAuthed" v-on:click="login" flat>
             Log in with GitHub
           </vs-button>
-          <vs-avatar history history-gradient v-if="$auth.isAuthenticated">
-            <img :src="$auth.user.picture" class="pointer" alt="" v-on:click="goToProfile">
+          <vs-avatar history history-gradient v-if="$store.state.isAuthed && $store.state.user">
+            <img :src="$store.state.user.photoURL" class="pointer" alt="" v-on:click="goToProfile">
           </vs-avatar>
         </template>
       </vs-navbar>
@@ -38,13 +38,12 @@ import "reflect-metadata";
 import Vue from "vue";
 import { Component, Watch } from "vue-property-decorator";
 import { Route } from "vue-router";
-
 @Component
 export default class NavBar extends Vue {
   active: string = 'primary';
 
-  login() {
-    this.$auth.loginWithRedirect({});
+  async login() {
+    await this.$auth.login();
   }
   logout() {
     this.$auth.logout();

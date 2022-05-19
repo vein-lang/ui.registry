@@ -1,10 +1,10 @@
 <template>
   <div id="error" class="center content-inputs" vs-justify="center" vs-align="center">
-    <vs-alert :color="'danger'" v-if="msg" shadow relief style="max-width: 50%;">
+    <vs-alert :color="'danger'" v-if="$store.state.errorMsg" shadow relief style="max-width: 50%;">
         <template #title>
           App error
         </template>
-        {{msg}}
+        {{$store.state.errorMsg}}
       </vs-alert>
   </div>
 </template>
@@ -15,9 +15,6 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 @Component
 export default class Error extends Vue {
-  get msg() {
-      return this.$auth.error;
-  }
 }
 </script>
 

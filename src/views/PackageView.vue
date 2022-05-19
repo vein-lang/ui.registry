@@ -2,7 +2,7 @@
   <div style="padding-top: 100px; padding-left: 20px" ref="content">
     <not-found v-if="isNotFound" />
     <vs-row v-if="!isNotFound && !isLoading">
-      <vs-col
+      <vs-col v-if="currentPackage"
         vs-type="flex"
         vs-justify="center"
         vs-align="center"
@@ -40,7 +40,7 @@
             <label for="vs-input--2445" class="vs-input__label">
               vein add {{ currentPackage.name }} --version {{ packageVersion }}
             </label>
-            <span
+            <span v-if="currentPackage"
               class="
                 vs-input__icon vs-input__icon--after
                 pointer
@@ -119,7 +119,7 @@
           </vs-table>
         </div>
       </vs-col>
-      <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="3">
+      <vs-col v-if="currentPackage" vs-type="flex" vs-justify="center" vs-align="center" w="3">
         <div style="padding-left: 10px">
           <vs-avatar
             size="100"
@@ -364,6 +364,8 @@ export default class PackageView extends Vue {
       return;
     }
 
+    console.warn(`[package]`, result);
+
     loading.close();
     this.currentPackage = result.data;
     this.packageVersion = this.currentPackage!.version;
@@ -425,7 +427,8 @@ export default class PackageView extends Vue {
     return this.$timeAgo.format(time);
   }
 
-  copyCommand(p: VeinShard) {
+  copyCommand(p: VeinShard | undefined) {
+    if (!p) return;
     navigator.clipboard.writeText(`vein add ${p.name} --version ${p.version}`);
     console.log(
       `Text '${`vein add ${p.name} --version ${p.version}`}' copied to clipboard`

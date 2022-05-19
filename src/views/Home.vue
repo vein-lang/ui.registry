@@ -120,9 +120,9 @@ async function getState()
 })
 export default class home extends Vue
 {
-  popular_packages = [];
-  packages_state = [];
-  latest_packages = [];
+  popular_packages: any[] = [];
+  packages_state: any[] = [];
+  latest_packages: any[] = [];
 
   search_packages_result?: VeinShard[] = [];
 
@@ -148,6 +148,17 @@ export default class home extends Vue
     this.popular_packages = result.popular_packages;
     this.latest_packages = result.latest_packages;
     this.packages_state = result.packages_state;
+
+
+     const noti = this.$vs.notification({
+            icon: `<i class='bx bx-error' style='font-size: 2.2rem;'></i>`,
+            color: `warn`,
+            position: `top-left`,
+            title: 'Important message!',
+            text: `<p style='font-size: 1.4em;'>We had a conflict with <a href='http://auth0.com/'>Auth0</a> service, they deleted our user DB without any notice. <br/>
+            If you have logged into your account and have not found permission to your packages, please write to us <a href='mailto:support@invocative.studio'>support@invocative.studio</a></p>`,
+            duration: 15000
+          });
   }
 
   abortSearch() {

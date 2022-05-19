@@ -1,18 +1,18 @@
 <template>
-  <div class="top-pad">
+  <div class="top-pad" v-if="$store.state.user">
     <vs-row>
       <vs-col vs-type="flex" vs-justify="center" vs-align="center" w="3">
         <div style="padding-right: 10px;">
           <vs-avatar size="70" badge badge-color="success">
-            <img :src="$auth.user.picture" alt="" v-on:click="changeAvatar" />
+            <img :src="$store.state.user.photoURL" alt="" v-on:click="changeAvatar" />
           </vs-avatar>
           <br />
           <vs-card class="no-pointer">
             <template #title>
-              <h3>{{ $auth.user.name }}</h3>
+              <h3>{{ $store.state.user.displayName }}</h3>
             </template>
             <template #text>
-              <p>{{ $auth.user.email }}</p>
+              <p>{{ $store.state.user.email }}</p>
             </template>
           </vs-card>
           <br/>
@@ -51,17 +51,14 @@ import { VeinShard } from "./../models";
 export default class Profile extends Vue {
   metaInfo() {
     return  {
-      title: `${this.$auth.user.name}`
+      title: `${this.$store.state.user?.displayName}`
     }
   }
 
   @Ref("_apiKeys_window_") readonly apiKeysWindow!: ApiKeys
   me2Packages: VeinShard[] = [];
   async created() {
-    let result = await axios.get("/@/me/packages", { 
-        headers: { "Authorization": `Bearer ${await this.$auth.getTokenSilently()}` 
-      }  
-    });
+    let result = await this.$axios.$get("/@/me/packages");
     this.me2Packages = result.data;
     console.log(this.me2Packages);
   }

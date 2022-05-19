@@ -63,7 +63,7 @@ export default class PackageList extends Vue {
     this.$router.push(`/package/${c.name}/${c.version}`);
   }
 
-  get getPageSize(){
+  get getPageSize(): Number {
     return this.pageSize ?? 4;
   }
 

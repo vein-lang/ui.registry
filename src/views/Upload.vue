@@ -13,7 +13,7 @@
     <div
       class="flex-container"
       style="padding: 100px"
-      v-if="!$auth.isAuthenticated"
+      v-if="!$store.state.isAuthed"
     >
       <div class="vs-card-content type-5 row" id="login-card">
         <div class="vs-card">
@@ -44,7 +44,7 @@
     <div
       class="flex-container"
       style="padding: 100px"
-      v-if="$auth.isAuthenticated"
+      v-if="$store.state.isAuthed"
     >
       <div class="con-input-upload">
         <input type="file" /> <span class="text-input"> Temporary disabled </span>
@@ -93,8 +93,8 @@ export default class PackageView extends Vue {
   }
   async created() {}
 
-  login() {
-    this.$auth.loginWithRedirect({});
+  async login() {
+    await this.$auth.login();
   }
 }
 </script>

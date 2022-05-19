@@ -137,7 +137,7 @@ export default class ApiKeys extends Vue {
   }
 
   async load() {
-    let result = await this.$axios.$get("/@/me/token", this.$auth);
+    let result = await this.$axios.$get("/@/me/token");
     this.apiKeys = result.data;
     this.isLoading = false;
     console.log(this.tableOfApiKeys);
@@ -149,8 +149,7 @@ export default class ApiKeys extends Vue {
     try {
       let result = await this.$axios.$post(
         `@/me/token/new?name=${encodeURIComponent(this.apiKeyName)}`,
-        {},
-        this.$auth
+        {}
       );
       this.apiKeys.push(result.data);
       this.creationActive = false;
@@ -168,8 +167,7 @@ export default class ApiKeys extends Vue {
     console.log(`Removing '${key.name}' api key...`);
     try {
       let result = await this.$axios.$delete(
-        `@/me/token/${key.uid}`,
-        this.$auth
+        `@/me/token/${key.uid}`
       );
       console.log(result);
       if (result.data == true) {

@@ -24,6 +24,7 @@ export type PackageVersions = {
 
 
 export type VeinShard = {
+    isVerified: boolean,
     name: string;
     version: string;
     description: string;

@@ -4,10 +4,13 @@ declare module '*.vue' {
 }
 
 import TimeAgo from "javascript-time-ago";
-import { VueAuth0 } from "./auth"
 import { VueAppRenderFlags } from "./render";
 import { ExtensionsAll } from "./extensions";
 import { CombinedVueInstance } from "vue";
+import { User } from "firebase/auth";
+import { FirebaseAuth } from "./firebase";
+import { State } from "./state";
+import { Store } from "vuex";
 
 const vsFunctions: {
   setColor(color: string, val: string): void;
@@ -21,7 +24,8 @@ const vsFunctions: {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    readonly $auth: VueAuth0;
+    readonly $store: Store<State>;
+    readonly $auth: FirebaseAuth & Vue;
     readonly $self_render: VueAppRenderFlags;
     readonly $timeAgo: TimeAgo;
     readonly $axios: ExtensionsAll;

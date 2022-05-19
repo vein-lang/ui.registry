@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import App from './App.vue';
-import { Auth0Plugin } from "./auth";
 import { RenderPlugin } from "./render";
 import axios from "axios";
 import './registerServiceWorker';
@@ -14,6 +13,10 @@ import * as Sentry from "@sentry/vue";
 import { Integrations } from "@sentry/tracing";
 import VueMeta from 'vue-meta';
 import * as Panelbear from '@panelbear/panelbear-js';
+import firebase from "./firebase";
+import store from "./state";
+
+firebase.beforeInstall();
 
 Panelbear.load('ICD6yJpIniJ');
 Panelbear.trackPageview();
@@ -36,7 +39,7 @@ if (process.env["REGISTRY_API_ENDPOINT"] !== undefined)
 
 let app: Vue | null = null;
 
-Vue.use(Auth0Plugin as any, {
+/*Vue.use(Auth0Plugin as any, {
   domain,
   clientId,
   audience,
@@ -44,8 +47,9 @@ Vue.use(Auth0Plugin as any, {
     app?.$loader.open();
     window.location.href = "/";
   }
-});
+});*/
 
+Vue.use(firebase.plugin, {});
 Vue.use(VueCookies);
 Vue.use(Vuesax, {});
 Vue.use(ExtensionsPlugin, {});
@@ -69,8 +73,10 @@ Sentry.init({
 
 app = new Vue({
   router,
+  store,
   render: h => h(App)
-}).$mount('#app');
+});
+app.$mount('#app');
 
 app.$loader.setLoaderCtor(() => app?.$vs.loading({
   target: app.$refs.app,
@@ -81,5 +87,7 @@ app.$loader.setLoaderCtor(() => app?.$vs.loading({
   color: '#fff'
 }));
 app.$loader.open();
+
+
 
 if (isDevelopment) (window as any).app = app;

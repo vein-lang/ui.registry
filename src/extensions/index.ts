@@ -3,21 +3,22 @@ import Vue, { PluginObject, VueConstructor } from "vue";
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
 import axios, { AxiosResponse } from "axios";
-import { VueAuth0 } from "@/auth";
+import { getAuth, Auth } from "firebase/auth";
 TimeAgo.addDefaultLocale(en);
 
 const timeAgo = new TimeAgo('en-US');
 
 let instance: ExtensionsAll;
+let auth: Auth | null = null;
 
 export type ExtensionsFields = {
 };
 
 export type ExtensionsMethods = {
-  $get(url: string, auth?: VueAuth0): Promise<AxiosResponse<any, any>>;
+  $get(url: string): Promise<AxiosResponse<any, any>>;
   $getCancelable(url: string, ctl: AbortController): Promise<AxiosResponse<any, any>>;
-  $post(url: string, data?: {}, auth?: VueAuth0): Promise<AxiosResponse<any, any>>;
-  $delete(url: string, auth?: VueAuth0): Promise<AxiosResponse<any, any>>;
+  $post(url: string, data?: {}): Promise<AxiosResponse<any, any>>;
+  $delete(url: string): Promise<AxiosResponse<any, any>>;
 } & ExtensionsFields;
 
 export type ExtensionsAll = {
@@ -28,13 +29,14 @@ export const useExtension = ({
   ...options
 }): ExtensionsAll => {
   if (instance) return instance as any;
+  auth = getAuth();
 
   instance = {
-    async $get(url: string, auth?: VueAuth0): Promise<AxiosResponse<any, any>> {
-      if (!auth)
+    async $get(url: string): Promise<AxiosResponse<any, any>> {
+      if (!auth?.currentUser)
         return await axios.get(url, { validateStatus: (x) => true, });
       return await axios.get(url, {
-        headers: { "Authorization": `Bearer ${await auth.getTokenSilently()}` },
+        headers: { "Authorization": `Bearer ${await auth.currentUser?.getIdToken()}` },
         validateStatus: (x) => true,
       });
     },
@@ -44,19 +46,19 @@ export const useExtension = ({
         validateStatus: (x) => true,
       });
     },
-    async $post(url: string, data?: {}, auth?: VueAuth0): Promise<AxiosResponse<any, any>> {
-      if (!auth)
+    async $post(url: string, data?: {}): Promise<AxiosResponse<any, any>> {
+      if (!auth?.currentUser)
         return await axios.post(url, data, { validateStatus: (x) => true, });
       return await axios.post(url, data, {
-        headers: { "Authorization": `Bearer ${await auth.getTokenSilently()}` },
+        headers: { "Authorization": `Bearer ${await auth.currentUser.getIdToken()}` },
         validateStatus: (x) => true,
       });
     },
-    async $delete(url: string, auth?: VueAuth0): Promise<AxiosResponse<any, any>> {
-      if (!auth)
+    async $delete(url: string): Promise<AxiosResponse<any, any>> {
+      if (!auth?.currentUser)
         return await axios.delete(url, { validateStatus: (x) => true, });
       return await axios.delete(url, {
-        headers: { "Authorization": `Bearer ${await auth.getTokenSilently()}` },
+        headers: { "Authorization": `Bearer ${await auth.currentUser.getIdToken()}` },
         validateStatus: (x) => true,
       });
     }
