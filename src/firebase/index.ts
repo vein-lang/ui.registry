@@ -30,7 +30,7 @@ export class FirebaseAuth {
   }
 
   install(vue: typeof Vue, options?: any) {
-    vue.prototype.$auth = {...this};
+    vue.prototype.$auth = this;
     console.log("Firebase (install)");
   }
 
