@@ -81,13 +81,11 @@ app.$mount('#app');
 app.$loader.setLoaderCtor(() => app?.$vs.loading({
   target: app.$refs.app,
   scale: '0.6',
-  background: 'warn',
   type: 'gradient',
-  opacity: 1,
-  color: '#fff'
+  text: 'Loading...',
+  opacity: 1
 }));
 app.$loader.open();
-
 
 
 if (isDevelopment) (window as any).app = app;

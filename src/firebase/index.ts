@@ -54,7 +54,6 @@ export class FirebaseAuth {
         .then(() => {
           return signInWithPopup(this.auth!, provider)
             .then((result) => {
-              const credential = GithubAuthProvider.credentialFromResult(result);
               state.commit(Keys.SET_USER, result.user);
               state.commit(Keys.SET_TOKEN, result.user);
               router.push(redirectTarget);

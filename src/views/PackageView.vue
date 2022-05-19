@@ -349,9 +349,9 @@ export default class PackageView extends Vue {
     const loading = this.$vs.loading({
       target: this.$refs.content,
       scale: "0.6",
-      background: "primary",
-      opacity: 1,
       color: "#fff",
+      type: 'rectangle',
+      text: 'Fetching package...'
     });
 
     let result = await this.$axios.$get(
