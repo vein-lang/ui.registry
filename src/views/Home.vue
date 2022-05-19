@@ -140,17 +140,16 @@ export default class home extends Vue
     this.search_packages_result = o;
   }
 
+  beforeDestroy() {
+    this.fucking_auth0_handle.close();
+  }
+
+
+  fucking_auth0_handle: any = null;
+
   async created() 
   {
-    this.$self_render.navbarEnable = true;
-    let result = await getState();
-    this.$loader.close();
-    this.popular_packages = result.popular_packages;
-    this.latest_packages = result.latest_packages;
-    this.packages_state = result.packages_state;
-
-
-     const noti = this.$vs.notification({
+    this.fucking_auth0_handle = this.$vs.notification({
             icon: `<i class='bx bx-error' style='font-size: 2.2rem;'></i>`,
             color: `warn`,
             position: `top-left`,
@@ -159,6 +158,12 @@ export default class home extends Vue
             If you have logged into your account and have not found permission to your packages, please write to us <a href='mailto:support@invocative.studio'>support@invocative.studio</a></p>`,
             duration: 15000
           });
+    this.$self_render.navbarEnable = true;
+    let result = await getState();
+    this.$loader.close();
+    this.popular_packages = result.popular_packages;
+    this.latest_packages = result.latest_packages;
+    this.packages_state = result.packages_state;
   }
 
   abortSearch() {
