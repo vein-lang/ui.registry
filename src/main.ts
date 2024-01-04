@@ -62,7 +62,7 @@ Sentry.init({
   integrations: [
     new Integrations.BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ["localhost", "vein.gallery", /^\//],
+      tracingOrigins: ["localhost", "gallery.vein-lang.org", /^\//],
     }),
   ],
   tracesSampleRate: 1.0,
