@@ -1,7 +1,7 @@
 <template>
     <div class="center examplex">
       <div class="gradient"></div>
-      <vs-navbar center-collapsed v-model="active" style="top: 5px; border-radius: 15px 15px 15px 15px;">
+      <vs-navbar center-collapsed v-model="active" style="top: 5px; border-radius: 15px 15px 15px 15px; z-index: -1;">
         <template #left>
           <img v-on:click="$router.push({ path: '/' }).catch(()=>{})" class="pointer" src="@/assets/logo.png" 
             height="64" width="64" alt="vein-registry-logo"/>
