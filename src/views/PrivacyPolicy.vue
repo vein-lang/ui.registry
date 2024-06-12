@@ -163,7 +163,7 @@ body {
   width: auto;
 }
 .flex-item {
-  font-weight: bold;
+  font-weight: 500;
   font-size: 2em;
   text-align: center;
 }
