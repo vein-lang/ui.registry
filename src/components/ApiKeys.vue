@@ -38,7 +38,7 @@
                 </vs-td>
                 <vs-td>
                   <i class="bx bx-timer"></i> Expires
-                  {{ getExpTime(tr.expiresDate) }}
+                  {{ getExpTime(new Date(tr.expiresDate)) }}
                 </vs-td>
 
                 <template #expand>
@@ -52,7 +52,7 @@
                     <div>
                       <vs-button disabled flat icon> Increment life </vs-button>
                       <vs-button
-                        border
+                        :border="true"
                         danger
                         v-on:click="removeApiKey(tr.uid)"
                       >
@@ -87,6 +87,20 @@
         </div>
       </template>
     </vs-dialog>
+    <vs-dialog v-model="showApiKey">
+      <template #header>
+        <h4 class="not-margin"><b>API Key</b></h4>
+      </template>
+
+      <div class="con-form">
+        <vs-input readonly icon-after v-model="lastApiKey" placeholder="API Key"
+          @click-icon="copyApiKey">
+          <template #icon>
+             <i class="bx bx-copy"></i> 
+          </template>
+        </vs-input>
+      </div>
+    </vs-dialog>
   </div>
 </template>
 
@@ -116,6 +130,8 @@ export default class ApiKeys extends Vue {
   isLoading: boolean = true;
   the60Days: number = 1;
   apiKeys: apiKey[] = [];
+  showApiKey: boolean = false;
+  lastApiKey: string = "";
   @Ref("_table_apikeys") tableOfApiKeys: VsTable;
 
   constructor() {
@@ -143,6 +159,21 @@ export default class ApiKeys extends Vue {
     console.log(this.tableOfApiKeys);
   }
 
+  copyApiKey() {
+    console.log("Copied!");
+    this.$vs.notification({
+      icon: `<i class='bx bx-copy' style='font-size: 2.2rem;'></i>`,
+      color: `info`,
+      position: `top-left`,
+      title: 'Copied!',
+      text: `Api key copied into clipboard buffer!`,
+      duration: 3000
+    });
+    navigator.clipboard.writeText(this.lastApiKey);
+    this.showApiKey = false;
+    this.creationActive = false;
+  }
+
   async createApiKey() {
     this.creationLoading = true;
     console.log(this.apiKeyName);
@@ -151,7 +182,10 @@ export default class ApiKeys extends Vue {
         `@/me/token/new?name=${encodeURIComponent(this.apiKeyName)}`,
         {}
       );
-      this.apiKeys.push(result.data);
+      let apiKey = result.data as apiKey;
+      this.showApiKey = true;
+      this.lastApiKey = apiKey.uid;
+      this.apiKeys.push(apiKey);
       this.creationActive = false;
     } catch (e) {
       this.creationActive = true;
