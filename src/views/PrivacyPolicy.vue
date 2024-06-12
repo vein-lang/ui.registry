@@ -51,7 +51,7 @@
         <vs-divider color="warning"> Third-party Services </vs-divider>
         <div class="flex-item text-item">
           We use Google Cloud and Vercel to host the Services, on servers
-          located in the US.
+          located in the US and Europe.
           <br />
           <a href="https://cloud.google.com/terms/cloud-privacy-notice">
             Google Clound's privacy notice is here </a
@@ -68,16 +68,16 @@
         <vs-divider color="warning"> Authentication provider </vs-divider>
         <div class="flex-item text-item">
           <a href="vein.gallery">vein.gallery</a>
-          uses the <a href="auth0.com">Auth0</a> authentication platform, an
+          uses the <a href="https://firebase.google.com/">FireBase</a> authentication platform, an
           adaptable authentication and authorization service to simplify
           authorization and<br />
           make it more secure during authorization, Auth0 receives basic
           information, information about the
           <a href="github.com">Github</a> account, including your Avatar and
           email In addition, your IP address may be disclosed to
-          <a href="auth0.com">Auth0</a> as part of the authorization process.<br />
-          <a href="https://auth0.com/privacy"
-            >Read Auth0’s Privacy Policy here</a
+          <a href="https://firebase.google.com/">FireBase</a> as part of the authorization process.<br />
+          <a href="https://firebase.google.com/support/privacy"
+            >Read FireBase's Privacy Policy here</a
           >.
         </div>
 
