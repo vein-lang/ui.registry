@@ -59,6 +59,12 @@ export default class App extends Vue {
 </script>
 
 <style>
+:root {
+  color-scheme: dark;
+}
+html {
+  scrollbar-width: thin;
+}
 .page {
   transition: all .25s ease;
   display: block;
@@ -67,7 +73,7 @@ export default class App extends Vue {
   width: 900px;
 }
 #search {
-  padding-top: 70px !important;
+  padding-top: 10px !important;
   display: flex;
   align-items: center;
   justify-content: center;

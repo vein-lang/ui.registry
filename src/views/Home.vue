@@ -10,8 +10,8 @@
         </template>
         </vs-input>
     </div>
-    <vs-divider color="warning"> </vs-divider>
-    <vs-row>
+    <vs-divider color="warning" v-if="!statsHide"> </vs-divider>
+    <vs-row  v-if="!statsHide">
       <vs-col :w="4">
         <div class="pad-7" >
           <vs-table>
@@ -72,8 +72,8 @@
     <div v-if="isSearchBegin && !searchLoading" class="package-list-wrapper">
       <package-list :packages="result_search" pageSize="8"/>
     </div>
-    <div v-if="!isSearchBegin && !searchLoading" style="width: 100%; height: 450px; text-align: center;">
-          <h3 style="padding-top: 200px; color: #242424;">Typo name for search</h3>
+    <div v-if="!isSearchBegin && !searchLoading" style="width: 100%; height: 120px; text-align: center;">
+          <h3 style="padding-top: 50px; color: #242424;">Typo name for search</h3>
     </div>
     <div v-if="isSearchBegin && searchLoading">
       <vs-button style="width: 99%; height: 100px;"
@@ -130,6 +130,7 @@ export default class home extends Vue
   searchTimer: number = -1;
   searchLoading: boolean = false;
   searchAborter?: AbortController;
+  statsHide: boolean = false;
 
   isSearchBegin: boolean = false;
 
@@ -140,15 +141,9 @@ export default class home extends Vue
     this.search_packages_result = o;
   }
 
-  beforeDestroy() {
-    this.fucking_auth0_handle.close();
-  }
-
-
-  fucking_auth0_handle: any = null;
-
   async created() 
   {
+    /*
     this.fucking_auth0_handle = this.$vs.notification({
             icon: `<i class='bx bx-error' style='font-size: 2.2rem;'></i>`,
             color: `warn`,
@@ -158,12 +153,14 @@ export default class home extends Vue
             If you have logged into your account and have not found permission to your packages, please write to us <a href='mailto:support@invocative.studio'>support@invocative.studio</a></p>`,
             duration: 15000
           });
+    */
     this.$self_render.navbarEnable = true;
     let result = await getState();
     this.$loader.close();
-    this.popular_packages = result.popular_packages;
-    this.latest_packages = result.latest_packages;
-    this.packages_state = result.packages_state;
+    let maxItems = 5;
+    this.popular_packages = result.popular_packages.slice(0, maxItems);
+    this.latest_packages = result.latest_packages.slice(0, maxItems);
+    this.packages_state = result.packages_state.slice(0, maxItems);
   }
 
   abortSearch() {
@@ -174,6 +171,7 @@ export default class home extends Vue
 
   @Watch('search_text')
   onSearchBegin(val: string, _: string) {
+    if (!this.statsHide) this.statsHide = true;
     if (this.searchTimer !== -1) 
       this.abortSearch();
     if (val === "" || val.length < 2)
