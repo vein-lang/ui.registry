@@ -8,7 +8,7 @@
         <div class="flex-item">
           <h3>Privacy Policy.</h3>
         </div>
-        <vs-divider color="warning"> Version 1.0, dated 2021-12-15 </vs-divider>
+        <vs-divider color="warning"> Version 1.1, dated 2024-06-13 </vs-divider>
         <div class="flex-item text-item">
           The Vein Lang maintains several services related to the Vein Project,
           including the <a href="vein-lang.org">vein-lang.org</a> and
