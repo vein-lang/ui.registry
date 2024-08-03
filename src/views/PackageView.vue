@@ -14,7 +14,7 @@
             <i class="bx bxs-memory-card" style="color: #525252"></i>
             <template #tooltip> This is a metapackage! </template>
           </vs-tooltip>
-          <vs-tooltip v-else-if="currentPackage.hasWorkload" style="display: inline">
+          <vs-tooltip v-else-if="currentPackage.isWorkload" style="display: inline">
             <i class="bx bxs-box" style="color: #525252"></i>
             <template #tooltip> This is a workload! </template>
           </vs-tooltip>
@@ -38,7 +38,7 @@
               class="vs-input vs-input--has-icon vs-input--has-icon--after"
               style="min-width: 100%; opacity: 1"
             />
-            <label v-if="currentPackage.hasWorkload" for="vs-input--2445" class="vs-input__label">
+            <label v-if="currentPackage.isWorkload" for="vs-input--2445" class="vs-input__label">
               rune workload install {{ currentPackage.name }} --version {{ packageVersion }}
             </label>
             <label v-else for="vs-input--2445" class="vs-input__label" >
