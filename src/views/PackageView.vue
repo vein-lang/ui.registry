@@ -10,21 +10,15 @@
         style="padding: 15px; padding-top: 0px"
       >
         <h1>
-          <vs-tooltip
-            style="display: inline"
-            v-if="currentPackage.hasMetapackage"
-          >
+          <vs-tooltip v-if="currentPackage.hasMetapackage" style="display: inline">
             <i class="bx bxs-memory-card" style="color: #525252"></i>
             <template #tooltip> This is a metapackage! </template>
           </vs-tooltip>
-          <vs-tooltip
-            style="display: inline"
-            v-if="currentPackage.hasWorkload"
-          >
+          <vs-tooltip v-else-if="currentPackage.hasWorkload" style="display: inline">
             <i class="bx bxs-box" style="color: #525252"></i>
             <template #tooltip> This is a workload! </template>
           </vs-tooltip>
-          <i class="bx bxs-package" style="color: #525252" v-else></i>
+          <i v-else class="bx bxs-package" style="color: #525252"></i>
           {{ packageName }}
           <verified-badge v-if="currentPackage.isVerified" />
         </h1>
@@ -44,10 +38,10 @@
               class="vs-input vs-input--has-icon vs-input--has-icon--after"
               style="min-width: 100%; opacity: 1"
             />
-            <label for="vs-input--2445" class="vs-input__label" v-if="currentPackage.hasWorkload">
+            <label v-if="currentPackage.hasWorkload" for="vs-input--2445" class="vs-input__label">
               rune workload install {{ currentPackage.name }} --version {{ packageVersion }}
             </label>
-            <label for="vs-input--2445" class="vs-input__label" v-else>
+            <label v-else for="vs-input--2445" class="vs-input__label" >
               rune add {{ currentPackage.name }} --version {{ packageVersion }}
             </label>
             <span v-if="currentPackage"
