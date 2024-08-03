@@ -17,6 +17,13 @@
             <i class="bx bxs-memory-card" style="color: #525252"></i>
             <template #tooltip> This is a metapackage! </template>
           </vs-tooltip>
+          <vs-tooltip
+            style="display: inline"
+            v-if="currentPackage.hasWorkload"
+          >
+            <i class="bx bxs-box" style="color: #525252"></i>
+            <template #tooltip> This is a workload! </template>
+          </vs-tooltip>
           <i class="bx bxs-package" style="color: #525252" v-else></i>
           {{ packageName }}
           <verified-badge v-if="currentPackage.isVerified" />
@@ -37,8 +44,11 @@
               class="vs-input vs-input--has-icon vs-input--has-icon--after"
               style="min-width: 100%; opacity: 1"
             />
-            <label for="vs-input--2445" class="vs-input__label">
-              vein add {{ currentPackage.name }} --version {{ packageVersion }}
+            <label for="vs-input--2445" class="vs-input__label" v-if="currentPackage.hasWorkload">
+              rune workload install {{ currentPackage.name }} --version {{ packageVersion }}
+            </label>
+            <label for="vs-input--2445" class="vs-input__label" v-else>
+              rune add {{ currentPackage.name }} --version {{ packageVersion }}
             </label>
             <span v-if="currentPackage"
               class="

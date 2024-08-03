@@ -52,4 +52,5 @@ export type VeinShard = {
     hasServicedPackage: boolean;
 
     hasMetapackage: boolean;
+    hasWorkload: boolean;
 }
