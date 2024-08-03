@@ -81,4 +81,10 @@ html {
   
   flex-wrap: wrap;
 }
+@media (min-width:500px) { 
+  .view {
+    padding-left: 20%;
+    padding-right: 20%;
+  }
+}
 </style>
