@@ -81,10 +81,17 @@ html {
   
   flex-wrap: wrap;
 }
-@media (min-width:500px) { 
+@media (min-width:1900px) { 
   .view {
-    padding-left: 20%;
-    padding-right: 20%;
+    padding-left: 20% !important;
+    padding-right: 20% !important;
   }
 }
+@media (min-width:1200px) and (max-width:1900px) { 
+  .view {
+    padding-left: 10% !important;
+    padding-right: 10% !important;
+  }
+}
+
 </style>
