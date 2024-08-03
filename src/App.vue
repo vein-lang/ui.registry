@@ -81,6 +81,12 @@ html {
   
   flex-wrap: wrap;
 }
+.view {
+  -moz-transition: 0.4s;
+  -o-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
 @media (min-width:1900px) { 
   .view {
     padding-left: 20% !important;
