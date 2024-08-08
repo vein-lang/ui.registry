@@ -39,12 +39,12 @@
               style="min-width: 100%; opacity: 1"
               :value="currentPackage.isWorkload ? `rune workload install ${currentPackage.name} --version ${currentPackage.version}` : `rune add ${currentPackage.name} --version ${currentPackage.version}`"
             />
-            <label v-if="currentPackage.isWorkload" for="vs-input--2445" class="vs-input__label">
+            <!-- <label v-if="currentPackage.isWorkload" for="vs-input--2445" class="vs-input__label">
               rune workload install {{ currentPackage.name }} --version {{ currentPackage.version }}
             </label>
             <label v-else for="vs-input--2445" class="vs-input__label" >
               rune add {{ currentPackage.name }} --version {{ currentPackage.version }}
-            </label>
+            </label> -->
             <span v-if="currentPackage"
               class="
                 vs-input__icon vs-input__icon--after
