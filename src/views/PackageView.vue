@@ -33,7 +33,7 @@
           <div class="vs-input-content vs-input-content--has-color">
             <input
               placeholder=""
-              disabled
+              readonly
               id="vs-input--2445"
               class="vs-input vs-input--has-icon vs-input--has-icon--after"
               style="min-width: 100%; opacity: 1"
@@ -433,10 +433,18 @@ export default class PackageView extends Vue {
 
   copyCommand(p: VeinShard | undefined) {
     if (!p) return;
-    navigator.clipboard.writeText(`vein add ${p.name} --version ${p.version}`);
-    console.log(
-      `Text '${`vein add ${p.name} --version ${p.version}`}' copied to clipboard`
-    );
+
+    if (p.isWorkload) {
+      navigator.clipboard.writeText(`rune workload install ${p.name} --version ${p.version}`);
+      console.log(
+        `Text '${`rune workload install ${p.name} --version ${p.version}`}' copied to clipboard`
+      );
+    } else {
+      navigator.clipboard.writeText(`rune add ${p.name} --version ${p.version}`);
+      console.log(
+        `Text '${`rune add ${p.name} --version ${p.version}`}' copied to clipboard`
+      );
+    }
 
     this.$vs.notification({
       sticky: true,
