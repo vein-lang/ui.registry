@@ -33,17 +33,17 @@
           <div class="vs-input-content vs-input-content--has-color">
             <input
               placeholder=""
-              readonly
+              disabled
               id="vs-input--2445"
               class="vs-input vs-input--has-icon vs-input--has-icon--after"
               style="min-width: 100%; opacity: 1"
-              :value="currentPackage.isWorkload ? `rune workload install ${currentPackage.name} --version ${packageVersion}` : `rune add ${currentPackage.name} --version ${packageVersion}`"
+              :value="currentPackage.isWorkload ? `rune workload install ${currentPackage.name} --version ${currentPackage.version}` : `rune add ${currentPackage.name} --version ${currentPackage.version}`"
             />
             <label v-if="currentPackage.isWorkload" for="vs-input--2445" class="vs-input__label">
-              rune workload install {{ currentPackage.name }} --version {{ packageVersion }}
+              rune workload install {{ currentPackage.name }} --version {{ currentPackage.version }}
             </label>
             <label v-else for="vs-input--2445" class="vs-input__label" >
-              rune add {{ currentPackage.name }} --version {{ packageVersion }}
+              rune add {{ currentPackage.name }} --version {{ currentPackage.version }}
             </label>
             <span v-if="currentPackage"
               class="
