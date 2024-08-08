@@ -41,9 +41,7 @@ export default class App extends Vue {
   }
   async created() 
   {
-    try { await this.$axios.$get("/health"); this.$loader.close(); }
-    catch { this.$loader.close(); this.$router.push("/maintenance"); this.$loader.close(); }
-
+    this.$loader.close(); 
     if (!this.$cookies.get("isAllowedCookie")) {
       this.openNotificationCookie();
     }
