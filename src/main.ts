@@ -77,7 +77,7 @@ app = new Vue({
   render: h => h(App)
 });
 app.$mount('#app');
-
+/*
 app.$loader.setLoaderCtor(() => app?.$vs.loading({
   target: app.$refs.app,
   scale: '0.6',
@@ -85,7 +85,7 @@ app.$loader.setLoaderCtor(() => app?.$vs.loading({
   text: 'Loading...',
   opacity: 1
 }));
-app.$loader.open();
+app.$loader.open();*/
 
 
 if (isDevelopment) (window as any).app = app;

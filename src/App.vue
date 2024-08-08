@@ -46,6 +46,9 @@ export default class App extends Vue {
       this.openNotificationCookie();
     }
   }
+  async mouted() {
+    this.$loader.close(); 
+  }
 
   openNotificationCookie() {
     this.$vs.notification({
