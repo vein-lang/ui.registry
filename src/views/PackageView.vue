@@ -37,7 +37,7 @@
               id="vs-input--2445"
               class="vs-input vs-input--has-icon vs-input--has-icon--after"
               style="min-width: 100%; opacity: 1"
-              :value="currentPackage.isWorkload ? `rune workload install ${currentPackage.name} --version ${currentPackage.version}` : `rune add ${currentPackage.name} --version ${currentPackage.version}`"
+              :value="currentPackage.isWorkload ? `rune workload install ${currentPackage.name}@${currentPackage.version}` : `rune add ${currentPackage.name}@${currentPackage.version}`"
             />
             <!-- <label v-if="currentPackage.isWorkload" for="vs-input--2445" class="vs-input__label">
               rune workload install {{ currentPackage.name }} --version {{ currentPackage.version }}
